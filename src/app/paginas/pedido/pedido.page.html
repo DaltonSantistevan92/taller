@@ -1,0 +1,107 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Nuevo Pedido</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="ServG.irA('/pedidos')">
+        <ion-icon slot="end" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+ 
+    <ion-buttons slot="end" *ngIf="objectPedido.pedidos_detalle.length > 0">
+      <ion-button (click)="onSubmit()" type="button" color="success">
+        <ion-icon slot="end" name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ng-container *ngIf="objectPedido">
+
+    <form>
+
+      <ion-item>
+        <ion-label>Seleccionar Usuario</ion-label>
+        <ion-select [(ngModel)]="objectPedido.usuario_id" name="usuario_id">
+          <ion-select-option *ngFor="let user of listasUsuarios" [value]="user.id">
+            {{ user.nombre | titlecase }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Seleccionar Cliente</ion-label>
+        <ion-select [(ngModel)]="objectPedido.cliente_id" name="cliente_id">
+          <ion-select-option *ngFor="let cli of listasClientes" [value]="cli.id">
+            {{ cli.nombre| titlecase }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Seleccionar Productos</ion-label>
+        <ion-select [(ngModel)]="objectPedido.producto_id" name="producto_id" (ionChange)="onProductoChange()">
+          <ion-select-option *ngFor="let prod of listasProductos" [value]="prod.id">
+            {{ prod.nombre| titlecase }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ng-container *ngIf="objectPedido.producto_id">
+        <ion-item>
+          <ion-label position="floating">Stock</ion-label>
+          <ion-input type="number" [(ngModel)]="objectPedido.stock" name="stock" readonly>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Precio</ion-label>
+          <ion-input type="number" [(ngModel)]="objectPedido.precio" name="precio" readonly>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Cantidad</ion-label>
+          <ion-input type="number" [(ngModel)]="objectPedido.cantidad" name="cantidad" min="0"
+            (ionChange)="onCantidadChange()">
+          </ion-input>
+        </ion-item>
+
+        <ng-container *ngIf="objectPedido.cantidad">
+          <ion-button expand="full" type="submit" [disabled]="isCantidadExcedeStock" (click)="addDetallePedido()">
+            Agregar al detalle pedido
+          </ion-button>
+        </ng-container>
+
+      </ng-container>
+
+      <ng-container *ngIf="objectPedido.pedidos_detalle.length > 0">
+        <ion-grid>
+          <ion-row class="header-row ion-text-center">
+            <ion-col size="4"><strong>Producto</strong></ion-col>
+            <ion-col size="3"><strong>Cantidad</strong></ion-col>
+            <ion-col size="3"><strong>Precio</strong></ion-col>
+            <ion-col size="2"><strong>Acción</strong></ion-col>
+          </ion-row>
+          <ion-row [ngClass]="{'last-row': last}" class="ion-margin-top ion-text-center"
+            *ngFor="let detalle of objectPedido.pedidos_detalle; let i = index; let last = last">
+            <ion-col size="4">{{ getNombreProducto(detalle.producto_id) }}</ion-col>
+            <ion-col size="3">{{ detalle.cantidad }}</ion-col>
+            <ion-col size="3">{{ detalle.precio }}</ion-col>
+            <ion-col size="2" class="action-col">
+              <ion-button fill="clear" color="danger" (click)="eliminarDetallePedido(i)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-container>
+    </form>
+
+  </ng-container>
+
+
+</ion-content>

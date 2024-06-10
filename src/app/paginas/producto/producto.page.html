@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> {{ this.id == 0 ? 'Nuevo Producto' : 'Editar Producto' }}</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="ServG.irA('/productos')">
+        <ion-icon slot="end" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="objectProducto">
+    <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      
+      <ion-item>
+        <ion-label position="floating">Imagen</ion-label>
+        <ion-button expand="block" (click)="fileInput.click()">Seleccionar Imagen</ion-button>
+        <input type="file" #fileInput (change)="onFileChange($event)" hidden />
+      </ion-item>
+
+      <div *ngIf="imagePreview" style="text-align: center; margin-top: 10px;">
+        <img [src]="imagePreview" alt="Vista previa de la imagen" style="max-width: 100%; height: auto;"/>
+        <ion-button color="danger" (click)="removeImage(fileInput)" expand="block" style="margin-top: 10px;">Eliminar Imagen</ion-button>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Codigo</ion-label>
+        <ion-input [(ngModel)]="objectProducto.codigo" name="codigo" required></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="objectProducto.nombre" name="nombre" required></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Stock</ion-label>
+        <ion-input [(ngModel)]="objectProducto.stock" name="stock" required></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input [(ngModel)]="objectProducto.precio" name="precio" required></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Activo</ion-label>
+        <ion-input [(ngModel)]="objectProducto.activo" name="activo" required></ion-input>
+      </ion-item>
+  
+      <ion-button expand="full" type="submit">
+        {{ this.id == 0 ? 'Guardar' : 'Actualizar' }}
+      </ion-button>
+    </form>
+  </ng-container>
+</ion-content>

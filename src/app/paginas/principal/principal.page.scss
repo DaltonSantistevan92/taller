@@ -1,0 +1,59 @@
+ion-icon {
+    font-size: 80px;
+}
+
+ion-card {
+    padding: 8px;
+}
+
+ion-card-content {
+    font-size: 80px;
+    text-align: center;
+}
+
+ion-card-title {
+    font-size: 20px;
+    text-align: center;
+    color: var( --ion-color-white );
+    position: relative;
+    top: -25px;
+}
+
+.colorboton1 {
+    /* Azul primario */
+    --ion-background-color: #007bff;
+    color: var( --ion-color-white );
+}
+
+.colorboton2 {
+    /* Gris oscuro (secondary) */
+    --ion-background-color: #6c757d;
+    color: var( --ion-color-white );
+}
+
+.colorboton3 {
+    /* Verde (success) */
+    --ion-background-color: #28a745;
+    color: var( --ion-color-white );
+}
+
+.colorboton4 {
+    /* Amarillo (warning) */
+    --ion-background-color: #ffc107;
+    color: var( --ion-color-white );
+}
+
+.colorboton5 {
+    /* Rojo (danger) */
+    --ion-background-color: #dc3545;
+    color: #ffffff;
+    color: var( --ion-color-white );
+
+}
+
+.colorboton6 {
+    /* Cian (info) */
+    --ion-background-color: #17a2b8;
+    color: #ffffff;
+    color: var( --ion-color-white );
+}

@@ -1,0 +1,32 @@
+.header-row {
+    font-weight: bold;
+    background-color: #f0f0f0; /* Color de fondo para la fila del encabezado */
+    border-bottom: 1px solid #ccc; /* Borde inferior para separar el encabezado */
+    padding: 2px 0; /* Espaciado dentro de la fila del encabezado */
+}
+
+ion-row {
+    border-bottom: 1px solid #ccc; /* Borde inferior para separar las filas */
+    padding: 10px 0; /* Espaciado dentro de las filas */
+}
+
+ion-col {
+    white-space: normal;
+    word-wrap: break-word;
+    padding:5px; /* Espaciado dentro de las columnas */
+}
+
+ion-row:last-of-type {
+    border-bottom: none; /* Eliminar el borde inferior para la última fila */
+}
+
+.action-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-add {
+    margin: 0px;
+    padding: 0px;
+}

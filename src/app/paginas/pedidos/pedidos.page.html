@@ -1,0 +1,91 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <shared-back-button defaultHref="principal"></shared-back-button>
+    </ion-buttons>
+
+    <ion-title>Pedidos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="ServG.irA('/pedido')">
+        <ion-icon slot="end" name="add"></ion-icon>
+        Nuevo
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <!-- Encabezado Pedido -->
+    <ion-row class="header-row ion-text-center">
+      <ion-col>#</ion-col>
+      <ion-col>Fecha</ion-col>
+      <ion-col>Estado</ion-col>
+      <ion-col>Accion</ion-col>
+    </ion-row>
+  
+    <ng-container *ngFor="let ped of listasPedidos; let i = index">
+      <ion-row>
+        <ion-col size="2" class="ion-padding expand-button">
+          <ion-icon [name]="ped.expanded ? 'chevron-up-outline' : 'chevron-down-outline'" 
+                    (click)="toggleExpand(i)">
+          </ion-icon>
+        </ion-col>
+  
+        <ion-col size="10" class="ion-padding">
+          <b>Usuario:</b> {{ ped.nombreUsuario | titlecase }} &nbsp;
+          <b>Cliente:</b> {{ ped.nombreCliente | titlecase }}
+        </ion-col>
+  
+        <ng-container *ngIf="ped.expanded">
+          <div class="expanded-details ion-text-center">
+            <!-- Cabecera de detalles del pedido -->
+            <ion-row class="header-row ion-text-center">
+              <ion-col><b>Producto</b></ion-col>
+              <ion-col><b>Cantidad</b></ion-col>
+              <ion-col><b>Precio</b></ion-col>
+              <ion-col><b>Subtotal</b></ion-col>
+            </ion-row>
+  
+            <!--  pedido -->
+            <ng-container *ngFor="let p of ped.pedidos; let index = index">
+              <ion-row>
+                <ion-col size="2" class="ion-padding expand-button">
+                  <ion-icon [name]="p.detailExpanded ? 'chevron-up-outline' : 'chevron-down-outline'" 
+                            (click)="toggleDetailExpand(p)">
+                  </ion-icon>
+                </ion-col>
+                <ion-col>{{ index + 1 }}</ion-col>
+                <ion-col>{{ p.fecha }}</ion-col>
+                <ion-col> 
+                  <ion-badge color="success">
+                    {{ p.estado == 1 ? 'ACTIVO' : ''  }}
+                  </ion-badge> 
+                </ion-col>
+                <ion-col> 
+                  <ion-col size="2" class="ion-padding expand-button">
+                    <ion-icon name="newspaper-outline" (click)="imprimirPdPedidos(p)"></ion-icon>
+                  </ion-col>
+                </ion-col>
+              </ion-row>
+  
+              <!-- Detalles del pedido -->
+              <ng-container *ngIf="p.detailExpanded">
+                <ion-row class="ion-padding" *ngFor="let detalle of p.detalle_pedido">
+                  <ion-col size="3">{{ detalle.producto.nombre }}</ion-col>
+                  <ion-col size="3">{{ detalle.cantidad }}</ion-col>
+                  <ion-col size="3">{{ detalle.precio | currency : 'USD' }}</ion-col>
+                  <ion-col size="3">{{ calcularSubtotal(detalle)  | currency : 'USD' }}</ion-col>
+                </ion-row>
+              </ng-container>
+  
+            </ng-container> 
+          </div>
+        </ng-container>
+  
+  
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+  
+</ion-content>

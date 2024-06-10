@@ -1,0 +1,50 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+label {
+  margin: auto;
+  margin-top: 50%;
+  width: 200px;
+  height: 100px;
+  background: grey;
+  display: block;
+  border-radius: 50px;
+  position: relative;
+}
+
+/* Estilos del punto (círculo) dentro del interruptor */
+label:after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 90px;
+  height: 90px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+/* Estilos cuando el interruptor está activado (checked) */
+input:checked + label {
+  background: #bada55;
+}
+
+input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+label:active:after {
+  width: 130px;
+}
+
+/* Ocultar el check nativo */
+input[type="checkbox"] {
+  display: none;
+}
